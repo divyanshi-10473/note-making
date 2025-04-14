@@ -37,7 +37,7 @@ const AuthLogin = () => {
         title: result.message,
         className: "bg-white text-black border border-gray-300 h-10 shadow-lg",
       });
-      navigate('/dashboard/subject');
+     
     } catch (errorMessage) {
       toast({
         title: errorMessage,
@@ -46,6 +46,7 @@ const AuthLogin = () => {
       });
     }
   };
+  
   
 
 

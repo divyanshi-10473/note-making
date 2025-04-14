@@ -9,11 +9,23 @@ import NotesPage from './pages/auth/main/notes'
 import NotFound from './pages/auth/not-found'
 import MainLayout from './components/main/mainlayout'
 import CheckAuth from './components/common/checkAuth'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { checkAuth } from './../store/auth-slice/index'
 
 function App() {
 
-const {isAuthenticated ,user}= useSelector(state=> state.auth)
+const {isAuthenticated ,user, isLoading}= useSelector(state=> state.auth)
+const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch (checkAuth());
+}, [dispatch]);
+
+if (isLoading) {
+  return <div>Loading...</div>
+}
+
   return (
     <>
     <Routes>

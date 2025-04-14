@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 require('dotenv').config();
 const authRouter = require('./routes/auth-routes')
-
+const subjectRouter = require('./routes/subject-route')
 
 mongoose.connect( process.env.MONGODB  
 ).then(()=>console.log('MongoDb connected')).catch(error=> console.log(error))
@@ -32,5 +32,6 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use('/api/auth', authRouter)
+app.use('/api/subjects', subjectRouter);
 
 app.listen(PORT, ()=> console.log(`server is running on port ${PORT}`))

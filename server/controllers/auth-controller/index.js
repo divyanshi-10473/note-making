@@ -83,7 +83,32 @@ const loginUser = async (req, res) => {
     }
 }
 
+const logoutUser = (req, res) => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged out successfully!",
+  });
+};
+
+
+const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ success: false, message: "Please login to access this resource" });
+  }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;  // Make sure this is correctly set
+    console.log("Authenticated user:", req.user);  // Check the user object
+    next();
+  } catch (error) {
+    res.status(401).json({ success: false, message: "Invalid token" });
+  }
+};
+
 module.exports = {
     registerUser,
     loginUser,
+    logoutUser,
+    authMiddleware
 }
