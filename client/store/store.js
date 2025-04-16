@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth-slice/index';
-import subjectReducer from './subject-slice/index'; // Import the subject slice
-
+import subjectReducer from './subject-slice/index'; 
+import chapterReducer from './chapter-slice/index'
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    subjects: subjectReducer, // Add the subjects reducer
+    subjects: subjectReducer, 
+    chapters: chapterReducer,
   },
 });
 

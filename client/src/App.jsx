@@ -44,7 +44,7 @@ if (isLoading) {
         
         }>
   <Route path="subject" element={<SubjectPage />} />
-  <Route path="chapter" element={<ChapterPage />} />
+  <Route path="chapter/:subjectId" element={<ChapterPage />} />
   <Route path="notes" element={<NotesPage />} />
 </Route>
       <Route path="*" element={<NotFound/>}> </Route>

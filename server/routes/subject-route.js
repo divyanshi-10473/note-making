@@ -4,7 +4,7 @@ const {authMiddleware} = require('../controllers/auth-controller/index.js')
 
 const router = express.Router();
 
-router.get('/get',authMiddleware,  getSubjects);
+router.get('/get/',authMiddleware,  getSubjects);
 router.post('/create',authMiddleware, createSubject);
 router.put('/edit/:id', authMiddleware, updateSubject);
 router.delete('/delete/:id',authMiddleware,  deleteSubject);

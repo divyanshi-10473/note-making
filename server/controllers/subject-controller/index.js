@@ -29,23 +29,28 @@ const getSubjects = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const subjects = await Subject.find({ userId });
+    const subjects = await Subject.find({ userId }).populate("chapters");
 
-    if (subjects.length< 0) {
-      return res.status(404).json({ success:false, message: 'No subjects found for this user' });
+    if (subjects.length <= 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'No subjects found for this user',
+      });
     }
 
     res.status(200).json({
-      success:true,
+      success: true,
       data: subjects,
-      });
+    });
   } catch (err) {
     console.error('Error fetching subjects:', err);
     res.status(500).json({
       success: false,
-       message: 'Failed to fetch subjects' });
+      message: 'Failed to fetch subjects',
+    });
   }
 };
+
 
 
 const updateSubject = async (req, res) => {
@@ -94,7 +99,7 @@ const updateSubject = async (req, res) => {
     res.status(200).json({success:true, message: 'Subject deleted successfully' });
   } catch (err) {
     console.error('Error deleting subject:', err);
-    res.status(500).json({ success:false, messsage: 'Failed to delete subject' });
+    res.status(500).json({ success:false, message: 'Failed to delete subject' });
   }
 };
 

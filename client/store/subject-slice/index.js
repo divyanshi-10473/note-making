@@ -88,18 +88,6 @@ export const fetchSubjects = createAsyncThunk(
   
 
 
- 
-//   export const deleteSubject = createAsyncThunk(
-//     "subjects/deleteSubject",
-//     async ({ id, token }) => {
-//       const result = await axios.delete(`http://localhost:5000/api/subjects/delete/${id}`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-//       return result?.data; 
-//     }
-//   );
 
 const subjectSlice = createSlice({
   name: "subjects",
@@ -112,7 +100,7 @@ const subjectSlice = createSlice({
     }).addCase(fetchSubjects.fulfilled,(state,action)=>{
         console.log(action.payload.data);
         state.isLoading = false;
-        state.subjectsList = action.payload.data;
+        state.subjectsList = action?.payload?.data;
     }).addCase(fetchSubjects.rejected,(state,action)=>{
         console.log(action.payload.data);
         state.isLoading = false;
