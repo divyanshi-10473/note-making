@@ -2,31 +2,36 @@ import React, { useEffect, useState } from 'react'
 import chapterImage from '../../../assets/chapters.png'
 import chap from '../../../assets/chap.png'
 import bg from '../../../assets/bg.png'
-import button from '../../../assets/add-chapter.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AddChapterDialog from '@/components/main/add-chapter'
 import { deleteChapter, editChapter, fetchChaptersBySubject } from '../../../../store/chapter-slice'
 import { Button } from '@/components/ui/button'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
 import Swal from 'sweetalert2'
-import dashboardImage from "../../../assets/d3.png"
+import dashboardImage from "../../../assets/addchap.png"
 import { toast } from '@/hooks/use-toast'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { MoreVertical } from "lucide-react";
 
 
 function ChapterPage() {
-
+  const navigate = useNavigate();
   const { subjectId } = useParams();
   const dispatch = useDispatch();
   const {chapterList} = useSelector((state)=> state.chapters)
   const [currentEditId, setCurrentEditId] = useState(null);
   const [currentChapterName, setCurrentChapterName] = useState("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   console.log(chapterList, "chapters batao phle");
 
+  
+  const handleView = (id) => {
+    console.log(id);
+    navigate(`/dashboard/notes/${id}`);
+  }
 
    async function handleDelete(id) {
       const result = await Swal.fire({
@@ -83,29 +88,43 @@ function ChapterPage() {
 
 
 
-   useEffect(()=>{
-       const result= dispatch(fetchChaptersBySubject(subjectId)).unwrap();
-       console.log(result, "chapters batao");
-  },[dispatch]);
+   
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          await dispatch(fetchChaptersBySubject(subjectId)).unwrap();
+        } catch (error) {
+          console.error("Failed to fetch chapters", error);
+        }
+        setLoading(false);
+      };
+    
+      fetchData();
+    }, [dispatch, subjectId]);
+    
 
 
   return (
 
     <div className="min-h-screen bg-cover bg-center bg-no-repeat pt-20"
-      style={{ backgroundImage: `url('${bg}')` }}>
-         {chapterList.length === 0 ? <div className="flex flex-col items-center justify-center h-full text-center p-6">
-  <img src={dashboardImage} alt="No subjects" className="w-{200px} mb-4" />
-  <h2 className="text-2xl font-semibold text-gray-700 mb-2">No Chapters Yet</h2>
-  <p className="text-gray-500 mb-4">Start by adding your first chapter to organize your notes.</p>
-  <div >
-  <AddChapterDialog open={open} setOpen={setOpen} currentEditId={currentEditId} setCurrentEditId={setCurrentEditId} currentChapterName={currentChapterName} setCurrentChapterName={setCurrentChapterName} subjectId={subjectId}/>
+    style={{ backgroundImage: `url('${bg}')` }}>
+  
+    {loading ? null : chapterList.length === 0 ? (
+      <div className="flex flex-col items-center justify-center h-full text-center p-6">
+        <img src={dashboardImage} alt="No subjects" className="w-{200px} mb-4" />
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">No Chapters Yet</h2>
+        <p className="text-gray-500 mb-4">Start by adding your first chapter to organize your notes.</p>
+        <AddChapterDialog open={open} setOpen={setOpen} currentEditId={currentEditId} setCurrentEditId={setCurrentEditId} currentChapterName={currentChapterName} setCurrentChapterName={setCurrentChapterName} subjectId={subjectId}/>
       </div>
-</div> : <div className="flex justify-end mb-6 px-4">
-<AddChapterDialog open={open} setOpen={setOpen} currentEditId={currentEditId} setCurrentEditId={setCurrentEditId} currentChapterName={currentChapterName} setCurrentChapterName={setCurrentChapterName} subjectId={subjectId}/>
-      </div>}
-     
-
-{chapterList.length > 0  && chapterList.map((chapter) => (
+    ) : (
+      <div className="flex justify-end mb-6 px-4">
+        <AddChapterDialog open={open} setOpen={setOpen} currentEditId={currentEditId} setCurrentEditId={setCurrentEditId} currentChapterName={currentChapterName} setCurrentChapterName={setCurrentChapterName} subjectId={subjectId}/>
+      </div>
+    )}
+  
+    {!loading && chapterList.length > 0 && chapterList.map((chapter) => (
      <div
      className='w-[80%] m-auto mt-10 flex flex-col  justify-center relative group  px-4'
      style={{

@@ -1,4 +1,4 @@
-import { HousePlug, LogOut, Menu,  UserCog } from "lucide-react";
+import { CircleUserRound, HousePlug, LogOut, Menu,  User,  UserCheck,  UserCog } from "lucide-react";
 import {
   Link,
   useNavigate,
@@ -41,22 +41,21 @@ function HeaderRightContent() {
 
       <DropdownMenu >
         <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
-            <AvatarFallback className="bg-orange-950 text-white font-extrabold">
-              {user?.name[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+        <div className=" p-2 rounded-full cursor-pointer" style={{backgroundColor: "rgb(53, 41, 29)"}} >
+  <User strokeWidth={2.25} color="white" size={30} />
+</div>
+
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56 text-white" style={{ background: " rgb(96, 79, 66)" }}>
+        <DropdownMenuContent side="right" className="w-56 text-white border-2 border-white" style={{ background: " rgb(53, 41, 29)" }}>
           <DropdownMenuLabel>Logged in as {user?.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-            <UserCog className="mr-2 h-4 w-4" />
+          <DropdownMenuItem className="cursor-pointer hover:bg-orange-50 hover:text-black" onClick={() => navigate("/shop/account")}>
+            <UserCog className="mr-2 h-4 w-4 " />
             Account
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
+          </DropdownMenuItem  >
+          <DropdownMenuSeparator color="white" />
+          <DropdownMenuItem onClick={handleLogout} className="cursor-pointer hover:bg-orange-50 hover:text-black" >
+            <LogOut className="mr-2 h-4 w-4 " />
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>

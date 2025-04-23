@@ -1,0 +1,17 @@
+const express = require('express');
+const { createNote, getNotesByChapter, toggleFavorite, deleteNote, updateNote, getNoteById, handleFileUpload } = require('../controllers/note-controller/index.js');
+const { authMiddleware } = require('../controllers/auth-controller/index.js');
+const { upload } = require('../helpers/cloudinary.js'); // Multer upload setup
+
+
+const router = express.Router();
+
+router.post('/upload-pdf', upload.single('file'), handleFileUpload);
+router.get('/get/:chapterId', authMiddleware, getNotesByChapter);
+router.post('/create', authMiddleware,upload.single('file'), createNote);
+router.put('/favorite/:id', authMiddleware, toggleFavorite);
+router.delete('/delete/:id', authMiddleware, deleteNote);
+router.put('/edit/:id', authMiddleware, updateNote);
+router.get('/getNote/:id', authMiddleware, getNoteById);
+
+module.exports = router;

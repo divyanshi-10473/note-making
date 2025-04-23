@@ -12,6 +12,9 @@ import CheckAuth from './components/common/checkAuth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { checkAuth } from './../store/auth-slice/index'
+import Home from './pages/auth/home'
+import AddNote from './components/main/add-note'
+import ViewNote from './components/main/view-note'
 
 function App() {
 
@@ -29,6 +32,7 @@ if (isLoading) {
   return (
     <>
     <Routes>
+      <Route path='/' element={<Home/>}></Route>
       <Route path="/auth" element={
         <CheckAuth isAuthenticated={isAuthenticated} user={user} >
         <Authlayout/>
@@ -45,8 +49,14 @@ if (isLoading) {
         }>
   <Route path="subject" element={<SubjectPage />} />
   <Route path="chapter/:subjectId" element={<ChapterPage />} />
-  <Route path="notes" element={<NotesPage />} />
+  <Route path="notes/:chapterId" element={<NotesPage />} />
 </Route>
+<Route path="/notes/add/:chapterId" element={ <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        <AddNote />
+        </CheckAuth>} />
+<Route path="/notes/view/:noteId" element={ <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        <ViewNote/>
+        </CheckAuth>} />
       <Route path="*" element={<NotFound/>}> </Route>
    
     </Routes>

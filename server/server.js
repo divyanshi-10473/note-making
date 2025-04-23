@@ -6,6 +6,7 @@ require('dotenv').config();
 const authRouter = require('./routes/auth-routes')
 const subjectRouter = require('./routes/subject-route')
 const chapterRouter = require('./routes/chapter-routes')
+const noteRouter = require('./routes/notes-routes')
 
 mongoose.connect( process.env.MONGODB  
 ).then(()=>console.log('MongoDb connected')).catch(error=> console.log(error))
@@ -35,5 +36,6 @@ app.use(express.json());
 app.use('/api/auth', authRouter)
 app.use('/api/subjects', subjectRouter);
 app.use('/api/chapters', chapterRouter);
+app.use('/api/notes', noteRouter);
 
 app.listen(PORT, ()=> console.log(`server is running on port ${PORT}`))

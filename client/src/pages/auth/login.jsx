@@ -57,11 +57,11 @@ const AuthLogin = () => {
         className="mx-auto w-full lg:h-[600px] h-full max-w-md space-y-6 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImg})` }}
       >
-        <div className="pl-[20%] py-8 lg:py-14 h-full custom-padding">
+        <div className="pl-[17%] py-8 lg:py-14 h-[60vh] custom-padding">
           <h1 className="text-center text-3xl font-bold tracking-tight text-foreground">
             Sign in to your account
           </h1>
-          <p className="text-center mb-4 lg:mb-20">
+          <p className="text-center mb-[20%]">
             Don't have an account
             <Link
               className="font-medium ml-2 text-primary hover:underline"

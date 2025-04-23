@@ -92,6 +92,13 @@ const updateChapter = async (req, res) => {
       chapter.isCompleted = isCompleted;
     }
 
+    const duplicate = await Chapter.findOne({ chapter_name, subjectId: chapter.subjectId, userId: req.user.id, _id: { $ne: id } });
+    if (duplicate) {
+      return res.status(400).json({ success: false, message: "Chapter name already exists." });
+    }
+    
+
+
     await chapter.save();
 
     res.status(200).json({ success: true, message: "Chapter updated", data: chapter });

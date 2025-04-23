@@ -59,16 +59,23 @@ const updateSubject = async (req, res) => {
   const userId = req.user.id;
 
   if (!subject_name) {
-    return res.status(400).json({ success:false, message: 'Subject name is required' });
+    return res.status(400).json({ success: false, message: 'Subject name is required' });
   }
 
   try {
+  
     const findSubject = await Subject.findOne({ _id: id, userId });
-
     if (!findSubject) {
-      return res.status(404).json({ success:false, message: 'Subject not found' });
+      return res.status(404).json({ success: false, message: 'Subject not found' });
     }
 
+  
+    const duplicate = await Subject.findOne({ subject_name, userId, _id: { $ne: id } });
+    if (duplicate) {
+      return res.status(400).json({ success: false, message: 'Subject name already exists' });
+    }
+
+  
     findSubject.subject_name = subject_name;
     await findSubject.save();
 
@@ -76,11 +83,12 @@ const updateSubject = async (req, res) => {
       success: true,
       data: findSubject,
     });
+
   } catch (err) {
     console.error('Error updating subject:', err);
-    res.status(500).json({success:false, message: 'Failed to update subject' });
+    res.status(500).json({ success: false, message: 'Failed to update subject' });
   }
-}; 
+};
 
 
 
