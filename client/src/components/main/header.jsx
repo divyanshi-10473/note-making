@@ -70,7 +70,7 @@ function Header() {
   return (
     <header className="fixed z-40 top-0  w-full shadow-xl " style={{ background: " rgba(248, 231, 212, 0.7)" ,borderBottom: "1px solid white" }}>
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
-        <Link to="/shop/home" className="flex items-center gap-2">
+        <Link to="/dashboard/subject" className="flex items-center gap-2">
         
           <img
   src={logo}

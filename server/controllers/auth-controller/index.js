@@ -98,8 +98,8 @@ const authMiddleware = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;  // Make sure this is correctly set
-    console.log("Authenticated user:", req.user);  // Check the user object
+    req.user = decoded;  
+    console.log("Authenticated user:", req.user);  
     next();
   } catch (error) {
     res.status(401).json({ success: false, message: "Invalid token" });
